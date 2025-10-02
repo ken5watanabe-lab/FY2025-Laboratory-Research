@@ -1,7 +1,7 @@
 [English](./README.md) | [日本語](./README.ja.md)
 
 
-# 2025_Laboratory-Research
+# 2025 Laboratory Research
 ---
 
 This repository is used to manage the **code (analysis scripts, experimental programs, etc.)** created by students during the Laboratory Research program.  

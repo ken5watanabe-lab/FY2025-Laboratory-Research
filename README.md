@@ -4,7 +4,7 @@
 # 2025_Laboratory-Research
 ---
 
-This repository is used to manage the **code (analysis scripts, experimental programs, etc.)** created by students during the medical research training program.  
+This repository is used to manage the **code (analysis scripts, experimental programs, etc.)** created by students during the Laboratory-Research program.  
 The **main branch** contains the general description of the repository and links to each student’s branch.  
 
 ## Repository Structure

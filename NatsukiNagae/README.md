@@ -1,7 +1,8 @@
 # Natsuki Nagae's Work
 
 🇺🇸 English | [🇯🇵 日本語](README_JPN.md)  
-This directory contains the research work by Natsuki Nagae during the FY2025 Laboratory Research, a third-year course at the Faculty of Medicine, Tokushima University.  
+This directory contains the research notebooks\* by Natsuki Nagae during the FY2025 Laboratory Research, a third-year course at the Faculty of Medicine, Tokushima University.  
+(\*Limited to the publicly shareable ones)  
 
 ## Research Project
 abstract

@@ -1,6 +1,6 @@
 # Hirofumi Mitani's Work
 
-🇺🇸 English | [🇯🇵 日本語](README_JPN.md)  
+🇺🇸 English | [🇯🇵 日本語](./README_JPN.md)  
 This directory contains the research notebooks\* by Hirofumi Mitani during the FY2025 Laboratory Research, a third-year course at the Faculty of Medicine, Tokushima University.  
 (\*Limited to the publicly shareable ones)  
 

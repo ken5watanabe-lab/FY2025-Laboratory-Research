@@ -1,27 +1,36 @@
-[English](./README.md) | [日本語](./README.ja.md)
+# FY2025 Laboratory Research
+
+🇺🇸 English | [🇯🇵 日本語](README_JPN.md)  
+This repository contains the publicly shareable research outputs (e.g., Jupyter Notebooks, analysis scripts, workflow programs) that were created by third-year students assigned to the Department of Medical Artificial Intelligence and Data Science during the FY2025 Laboratory Research, a course at the Faculty of Medicine, Tokushima University. These materials represent educational activities and are **not finalized publications**.  
 
 
-# 2025 Laboratory Research
----
+## Overview
+This repository serves as an educational resource and a record of our lab’s research training activities.  
 
-This repository is used to manage the **code (analysis scripts, experimental programs, etc.)** created by students during the Laboratory Research program.  
-The **main branch** contains the general description of the repository and links to each student’s branch.  
 
-## Repository Structure
-- **main branch**  
-  - This README (repository overview and branch list)  
+## Disclaimer
+All materials are prepared for educational purposes and exclude any data or project details that cannot be publicly shared, such as human cohort data requiring consent or unpublished animal study data. Contents are limited to publicly shareable components and may be simplified. Because these outputs were created by students during training, they may contain errors or unintended behaviors and are not intended for clinical or production use.  
 
-- **student branches**  
-  - Contain code related to the student’s training work  
 
-## Branch List
-Each student’s code is stored in a dedicated branch:
+## Directory Description
+- [Hirofumi Mitani's work](./HirofumiMitani/)
+- [Ikuma Fukumoto's work](./IkumaFukumoto/)
+- [Natsuki Nagae's work](./NatsukiNagae/)
+- [Temporary working directory](./Temp/)
 
-- [IkumaFukumoto branch](../../tree/IkumaFukumoto)  
-  - Code from Ikuma Fukumoto
 
-- [NatsukiNagae branch](../../tree/NatsukiNagae)  
-  - Code from Natsuki Nagae
+## License
+A repository-level license applies. Individual student directories may include their own license files.  
 
-- [HirofumiMitani branch](../../tree/HirofumiMitani)  
-  - Code from Hirofumi Mitani
+
+## Contact
+Department of Medical Artificial Intelligence and Data Science, Graduate School of Biomedical Sciences, Tokushima University  
+- Professor: Kengo Watanabe, Ph.D.
+- Assistant Professor: Masashi Ishizu, R.D., Ph.D.
+- Assistant Professor: Takeshi Watanabe, D.D.S., Ph.D.
+
+
+## Log
+- Created repo: Oct. 2, 2025 (Ikuma Fukumoto)
+- Cleaned repo and README: Oct. 24, 2025 (Kengo Watanabe)
+

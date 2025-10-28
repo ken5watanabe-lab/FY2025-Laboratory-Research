@@ -1,0 +1,72 @@
+.TH "TextMarker" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TextMarker
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ptextmark\&.h>\fP
+.PP
+Inherits \fBDigMark\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTextMarker\fP (int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBTextMarker\fP with empty data and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBTextMarker\fP (const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBTextMarker\fP with empty data and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "\fBTextMarker\fP (std::string &vData, int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBTextMarker\fP from existing data and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBTextMarker\fP (std::string &vData, const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBTextMarker\fP from existing data and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "size_t \fBSize\fP () const"
+.br
+.RI "Retrieve the length of the stored string\&. "
+.ti -1c
+.RI "\fBDigMark\fP \fBGetMark\fP ()"
+.br
+.RI "Retrieve the underlying marker and codes\&. "
+.ti -1c
+.RI "void \fBSetString\fP (std::string sData)"
+.br
+.ti -1c
+.RI "std::string \fBGetString\fP () const"
+.br
+.RI "Get the stored string data\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBText\fP"
+.br
+.RI "The encapsulated data\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+You can store a string of any length in this object, but remember that you will get an error if you try to save it in a channel that doesn't have enough space\&. See GetExMarkInfo()\&.
+.PP
+The access operator in Python is overloaded, so you can call mark[i] on a \fBWaveMarker\fP to get or set the ith char in the string\&. It may be prefereable however, to use the \fBGetString()\fP and \fBSetString()\fP functions\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBDigMark\fP TextMarker::GetMark ()\fC [inline]\fP"
+
+.PP
+Retrieve the underlying marker and codes\&. Set the stored string data 
+.SS "void TextMarker::SetString (std::string sData)\fC [inline]\fP"
+This will let you store a string of any length, so be careful that when you save a marker to a channel, the stored string contains fewer than nRows characters\&. See GetExMarkInfo(), \fBSize()\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

@@ -1,0 +1,57 @@
+.TH "WaveMarker" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+WaveMarker
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <pwavemark\&.h>\fP
+.PP
+Inherits \fBDigMark\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBWaveMarker\fP (size_t nRows, size_t nCols, int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBWaveMarker\fP with empty data of a known length and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBWaveMarker\fP (size_t nRows, size_t nCols, const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBWaveMarker\fP with empty data of a known length and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "\fBWaveMarker\fP (std::vector< std::vector< short > > &vData, int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBWaveMarker\fP from existing data and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBWaveMarker\fP (std::vector< std::vector< short > > &vData, const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBWaveMarker\fP from existing data and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "std::pair< size_t, size_t > \fBSize\fP () const"
+.br
+.RI "Retrieve the length of the attached data\&. "
+.ti -1c
+.RI "\fBDigMark\fP \fBGetMark\fP ()"
+.br
+.RI "Retrieve the underlying marker and codes\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< std::vector< short > > \fBData\fP"
+.br
+.RI "The encapsulated data\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+The size of the array is determined on construction, and should correspond to the nRows value of a RealMark channel that you wish to submit this data to\&.
+.PP
+The access operator in Python is overloaded, so you can call mark[i,j] on a \fBWaveMarker\fP to set the (i, j)th data value, and you can use either mark[i,j] or mark[i][j] to get a value\&. Unfortunately, you cann't use mark[i][j] to set values, so for consistency, it is advised to stick to the tuple form (mark[i, j]) for both getting and setting\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

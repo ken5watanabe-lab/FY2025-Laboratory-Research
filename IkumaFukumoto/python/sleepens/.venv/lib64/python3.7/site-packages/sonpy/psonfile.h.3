@@ -1,0 +1,250 @@
+.TH "D:/hgwork/sonpy/psonfile.h" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+D:/hgwork/sonpy/psonfile.h \- Declares the \fBSonFile\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string>\fP
+.br
+\fC#include 'machine\&.h'\fP
+.br
+\fC#include 's64priv\&.h'\fP
+.br
+\fC#include 's32priv\&.h'\fP
+.br
+\fC#include 'pfilter\&.h'\fP
+.br
+\fC#include 'prealmark\&.h'\fP
+.br
+\fC#include 'pwavemark\&.h'\fP
+.br
+\fC#include 'ptextmark\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBSonFile\fP"
+.br
+.RI "Wraps either a 64- or 32-bit File and passes function calls to it in a tidy way\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBOpenFlags\fP { \fBOpenFlags::None\fP = ceds64::eOpenFlags::eOF_none, \fBOpenFlags::Shared\fP = ceds64::eOpenFlags::eOF_shared, \fBOpenFlags::Test\fP = ceds64::eOpenFlags::eOF_test }"
+.br
+.RI "Options for file opening\&. "
+.ti -1c
+.RI "enum \fBSonError\fP { \fBSonError::Son_OK\fP = ceds64::S64_ERROR::S64_OK, \fBSonError::No_File\fP = ceds64::S64_ERROR::NO_FILE, \fBSonError::No_Block\fP = ceds64::S64_ERROR::NO_BLOCK, \fBSonError::Call_Again\fP = ceds64::S64_ERROR::CALL_AGAIN, \fBSonError::No_Access\fP = ceds64::S64_ERROR::NO_ACCESS, \fBSonError::No_Memory\fP = ceds64::S64_ERROR::NO_MEMORY, \fBSonError::No_Channel\fP = ceds64::S64_ERROR::NO_CHANNEL, \fBSonError::Channel_Used\fP = ceds64::S64_ERROR::CHANNEL_USED, \fBSonError::Channel_Type\fP = ceds64::S64_ERROR::CHANNEL_TYPE, \fBSonError::Past_EOF\fP = ceds64::S64_ERROR::PAST_EOF, \fBSonError::Wrong_File\fP = ceds64::S64_ERROR::WRONG_FILE, \fBSonError::No_Extra\fP = ceds64::S64_ERROR::NO_EXTRA, \fBSonError::Bad_Read\fP = ceds64::S64_ERROR::BAD_READ, \fBSonError::Bad_Write\fP = ceds64::S64_ERROR::BAD_WRITE, \fBSonError::Corrupt_File\fP = ceds64::S64_ERROR::CORRUPT_FILE, \fBSonError::Past_SOF\fP = ceds64::S64_ERROR::PAST_SOF, \fBSonError::Read_Only\fP = ceds64::S64_ERROR::READ_ONLY, \fBSonError::Bad_Param\fP = ceds64::S64_ERROR::BAD_PARAM, \fBSonError::Over_Write\fP = ceds64::S64_ERROR::OVER_WRITE, \fBSonError::More_Data\fP = ceds64::S64_ERROR::MORE_DATA }"
+.br
+.RI "Possible errors that may be returned by Son64 library functions\&. "
+.ti -1c
+.RI "enum \fBDataType\fP { \fBDataType::Off\fP = ceds64::TDataKind::ChanOff, \fBDataType::Adc\fP = ceds64::TDataKind::Adc, \fBDataType::EventFall\fP = ceds64::TDataKind::EventFall, \fBDataType::EventRise\fP = ceds64::TDataKind::EventRise, \fBDataType::EventBoth\fP = ceds64::TDataKind::EventBoth, \fBDataType::Marker\fP = ceds64::TDataKind::Marker, \fBDataType::AdcMark\fP = ceds64::TDataKind::AdcMark, \fBDataType::RealMark\fP = ceds64::TDataKind::RealMark, \fBDataType::TextMark\fP = ceds64::TDataKind::TextMark, \fBDataType::RealWave\fP = ceds64::TDataKind::RealWave }"
+.br
+.RI "The different possible data types a channel can be set to hold\&. "
+.ti -1c
+.RI "enum \fBCommitFlags\fP { \fBCommitFlags::None\fP = 0, \fBCommitFlags::FlushSystem\fP = ceds64::eCommitFlags::eCF_flushSys, \fBCommitFlags::HeaderOnly\fP = ceds64::eCommitFlags::eCF_headerOnly, \fBCommitFlags::DeleteBuffer\fP = ceds64::eCommitFlags::eCF_delBuffer }"
+.br
+.RI "Flags for commiting data to disk (see \fBSonFile::Commit()\fP ) "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBGetErrorString\fP (int iErr)"
+.br
+.RI "Converts an error code to a string describing the error\&. "
+.ti -1c
+.RI "int64_t \fBMaxTime64\fP ()"
+.br
+.RI "Gets the maximum time allowed in a 64-bit SON file\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Declares the \fBSonFile\fP class\&. 
+
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBCommitFlags\fP\fC [strong]\fP"
+
+.PP
+Flags for commiting data to disk (see \fBSonFile::Commit()\fP ) 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINone \fP\fP
+No extra behaviour 
+.TP
+\fB\fIFlushSystem \fP\fP
+After writing data, tell system to ensure it is physically on the disk\&. This can be VERY slow (several seconds)\&. Only use this if you are certain you can tolerate the disk system becoming inaccessible for several seconds\&. You might use this just before closing a newly created file to be certain that it is safely saved\&. Beware that on Windows systems this flag has been observed to cause the system to become unresponsive for several seconds while all dirty data buffered on the disk is written\&. We suspect that this is because modern disks may implement very large data buffers\&. They know which blocks in the buffers are dirty (need writing), but may not know which file each block belongs to\&. When we tell the OS to commit a file with FlushSystem, the system tells the disk to write all dirty blocks, and this can be a lot of data\&. Ironically, older disks that rely on the OS to handle all buffering work better for a commit as the OS can write only dirty blocks belonging to the data file\&. 
+.TP
+\fB\fIHeaderOnly \fP\fP
+Only commit the file header, not buffered channel data\&. You might use this if you added or deleted a channel or changed any file information and wanted to be certain that the file header was committed with the change\&. The file header also holds all text strings used in the file (even channel comments, titles and units) 
+.TP
+\fB\fIDeleteBuffer \fP\fP
+Kill off channel buffering after committing data\&. This will set any circular buffer set for the channel to have 0 size\&. If you use this flag with HeaderOnly you will lose any data that was in the circular buffer\&. 
+.SS "enum \fBDataType\fP\fC [strong]\fP"
+
+.PP
+The different possible data types a channel can be set to hold\&. There are two wave type, three event types and four marker types\&. Any marker type that is not the standard marker is also known as an extended marker type\&.
+.PP
+There is a hierarchy to the non-wave types\&. At the bottom are the event types\&. All are essentially the same thing for the purposes of data storage, it is only in their interpretation that they differ\&. These are built upon by markers, which in turn are build upon by any of the extended markers\&. For details on how this works, see the description of each type\&.
+.PP
+Wave type channels can have data overwritten, although this is not intended behaviour\&. It is expected that the only use of this would be to fix holes in corrupt data\&. In normal use, all data for a wave type channel will be aligned at times that are exact multiples of the channel divide after the first data point\&. We do not prevent you writing data where the alignment is not the same after a gap, but Spike2 will experience subtle problems if you do this\&.
+.PP
+All other (event/marker based) channels must be time ordered (monotonically increasing) or the file will be corrupted\&. You cannot write events or markers to a point in time earlier than any already existing items\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIOff \fP\fP
+This channel is not used and has no data associated with it\&. 
+.TP
+\fB\fIAdc \fP\fP
+Sometimes known as WaveForm data\&. This consists of time-continuous data stored as short integers (i\&.e\&. 16-bits long)\&. This is the most fundamental type of channel to Spike2\&. Each Adc channel contains a scale and an offset, so that data in the 16-bit range (-32768 to 32767) can be transformed onto any required range according to y=mx+c\&. For more details about how the scale and offset are used, see SetChannelScale() 
+.TP
+\fB\fIEventFall \fP\fP
+Essentially a list of points at which a signal has passed from high to low\&. Each item constists of a single 64-bit integer which contains the time value, in ticks, at which the event occured\&. 
+.TP
+\fB\fIEventRise \fP\fP
+As for EventFall, but corresponds to rising, rather than falling, triggers\&. 
+.TP
+\fB\fIEventBoth \fP\fP
+As with other event channels, a list of times, this time, when a signal passes either direction, high to low or low to high\&. 
+.TP
+\fB\fIMarker \fP\fP
+This type builds on events by having 4 8-bit codes in addition to the 64-bit time stamp\&. There are also 32 bits of reserved space after these codes, so the whole structure is 16 bytes long\&. 
+.TP
+\fB\fIAdcMark \fP\fP
+Also called WaveMark data, this extended marker type augments the standard marker with a series of short integers (16-bit)\&. If you set up a channel of this type with multiple columns, each column represents a different 'trace'\&. Each trace is essentially a wave fragment that is associated with its marker\&. If you associate a timebase with the channel, it can be interpreted in context of the timebase of the entire file, and Spike2 can plot the data as isolated snippets of Adc data\&. If you use multiple traces, the data is stored interleaved\&. 
+.TP
+\fB\fIRealMark \fP\fP
+Similar to AdcMark, this exteneded marker augments the standard marker with a series of 4 byte floating point data\&. Unlike AdcMark however, only a single column of data is supported, as this type is not used to draw multiple waves, rather to store multiple single measurements\&. 
+.TP
+\fB\fITextMark \fP\fP
+This extended marker augments the standard marker with a zero-terminated series of characters\&. You can store a string of any length in each, but Spike2 has a limit of 79 characters, so anything longer than this will be truncated if you open the file in Spike2\&. 
+.TP
+\fB\fIRealWave \fP\fP
+Similar to Adc data, this consists of a contiguous stream of 4 byte float data\&. There is a scale and offset associated with these channels, but it is most often entirely redundant\&. For more details about how the scale and offset are used, see SetChannelScale()\&. 
+.SS "enum \fBOpenFlags\fP\fC [strong]\fP"
+
+.PP
+Options for file opening\&. The file open constructor uses None by default, so you never have to worry about these\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINone \fP\fP
+Business as usual\&. 
+.TP
+\fB\fIShared \fP\fP
+Currently redundant\&. 
+.TP
+\fB\fITest \fP\fP
+Open file even if header can't be verified\&. 
+.SS "enum \fBSonError\fP\fC [strong]\fP"
+
+.PP
+Possible errors that may be returned by Son64 library functions\&. To get descriptions of one of these error from within Pyhon, see \fBGetErrorString()\fP\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISon_OK \fP\fP
+No error\&. 
+.TP
+\fB\fINo_File \fP\fP
+This object does not own a file handle or any resources\&. 
+.TP
+\fB\fINo_Block \fP\fP
+Failed to allocate a disk block\&. 
+.TP
+\fB\fICall_Again \fP\fP
+Long operation, call again (this should only be visible internally!) 
+.TP
+\fB\fINo_Access \fP\fP
+No access: bad operation or file in use\&. 
+.TP
+\fB\fINo_Memory \fP\fP
+Out of memory reading 32-bit file\&. 
+.TP
+\fB\fINo_Channel \fP\fP
+Channel doesn't exist\&. 
+.TP
+\fB\fIChannel_Used \fP\fP
+Channel already in use\&. 
+.TP
+\fB\fIChannel_Type \fP\fP
+Channel has wrong type\&. 
+.TP
+\fB\fIPast_EOF \fP\fP
+Tried to access past the end of the file\&. 
+.TP
+\fB\fIWrong_File \fP\fP
+Tried to open wrong file type\&. 
+.TP
+\fB\fINo_Extra \fP\fP
+Request is outside the extra data region\&. 
+.TP
+\fB\fIBad_Read \fP\fP
+Read error\&. 
+.TP
+\fB\fIBad_Write \fP\fP
+Write error\&. 
+.TP
+\fB\fICorrupt_File \fP\fP
+File is bad or tired to write corrupt data\&. 
+.TP
+\fB\fIPast_SOF \fP\fP
+Tried to access before the start of the file\&. 
+.TP
+\fB\fIRead_Only \fP\fP
+Tried to write to a read only file\&. 
+.TP
+\fB\fIBad_Param \fP\fP
+A parameter is bad (check type, dimensions and sizes) 
+.TP
+\fB\fIOver_Write \fP\fP
+Tried to over-write data when not allowed\&. 
+.TP
+\fB\fIMore_Data \fP\fP
+The file is bigger than the header says; it may not have closed properly\&. 
+.SH "Function Documentation"
+.PP 
+.SS "std::string GetErrorString (int iErr)"
+
+.PP
+Converts an error code to a string describing the error\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIiErr\fP Error code corresponding to a SonError 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The error code described as a string 
+.RE
+.PP
+
+.SS "int64_t MaxTime64 ()"
+
+.PP
+Gets the maximum time allowed in a 64-bit SON file\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The value of the largest possible number of (usable) ticks in a 64-bit SON file\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

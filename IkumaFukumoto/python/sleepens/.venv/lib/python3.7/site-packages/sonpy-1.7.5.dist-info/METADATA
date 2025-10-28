@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: sonpy
+Version: 1.7.5
+Summary: The Python interface to the 64-bit Son library
+Home-page: http://ced.co.uk/downloads/latestsoftware
+Author: William Collins
+Author-email: will@ced.co.uk
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.7, <3.8
+Requires-Dist: numpy
+
+SonPy is a Python module that provides an interface to the 64 bit SON filing system, provided and maintained by CED. With it, you can read, write and create Spike2 data files from within Python. 
+
+SonPy is available for Python 3 only, starting with 3.7 It is provided for 32- and 64-bit versions of Windows 10, MacOS 10.15 (Catalina) and later, and Linux distros based on Debian (e.g. Ubuntu). We expect it to be very portable, working on later versions of each OS, but we cannot guarantee this to be the case. It is provided 'as is' with no warranty.
+
+You can install the latest version of SonPy from PyPI with: "pip install sonpy". This should install the numpy dependency. The example files also use matplotlib, which is not included by default but can be pip installed, and tkinter, which should come already packaged with relevant versions of Python.
+
+There is documentation and a few example files provided with SonPy, but to summarise:
+* Because of cross-platform requirements, the actual SonPy library is the sub-package sonpy.lib
+* The test scripts are available in the installation directory, and can be invoked within Python with “import sonpy.ExampleName”. More information is provided in the included documentation. They are not laid out for any particular use case, but are simply provided in order to show some of the objects, functions, enumerations etc. in the SonPy module.
+* Detailed documentation is provided in the module installation directory, as well as the help that is available from within Python by calling help(sonpy). Note that the detailed documentation is not Pythonic, as it has been compiled from C++ source code. We have endeavoured to make sure that all names have been maintained in the binding code, but we cannot guarantee that every name in the help pages matches the internal Python help, which will always have the correct names. 
+
+

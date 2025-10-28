@@ -32,4 +32,4 @@ The usefulness of AlphaGenome for large-scale prediction of gene expression from
 
 ## Log
 - Created this directory: Oct. 24, 2025 (Kengo Watanabe)
-- Uploaded the notebooks:
+- Uploaded the notebooks: Oct. 28, 2025 (Natsuki Nagae)

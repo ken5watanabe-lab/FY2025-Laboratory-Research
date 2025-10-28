@@ -1,0 +1,57 @@
+.TH "RealMarker" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RealMarker
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <prealmark\&.h>\fP
+.PP
+Inherits \fBDigMark\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRealMarker\fP (size_t nSize, int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBRealMarker\fP with empty data of a known length and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBRealMarker\fP (size_t nSize, const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBRealMarker\fP with empty data of a known length and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "\fBRealMarker\fP (std::vector< float > &vData, int64_t nTick=0, uint8_t nCode1=0, uint8_t nCode2=0, uint8_t nCode3=0, uint8_t nCode4=0)"
+.br
+.RI "Create a \fBRealMarker\fP from existing data and the marker codes and tick value\&. "
+.ti -1c
+.RI "\fBRealMarker\fP (std::vector< float > &vData, const \fBDigMark\fP &mark)"
+.br
+.RI "Create a \fBRealMarker\fP from existing data and an existing \fBDigMark\fP\&. "
+.ti -1c
+.RI "size_t \fBSize\fP () const"
+.br
+.RI "Retrieve the length of the attached data\&. "
+.ti -1c
+.RI "\fBDigMark\fP \fBGetMark\fP ()"
+.br
+.RI "Retrieve the underlying marker and codes\&. "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< float > \fBData\fP"
+.br
+.RI "The encapsulated data\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+The size of the array is determined on construction, and should correspond to the nRows value of a RealMark channel that you wish to submit this data to\&.
+.PP
+The access operator in Python is overloaded, so you can call mark[i] on a \fBRealMarker\fP to get or set the ith data value\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

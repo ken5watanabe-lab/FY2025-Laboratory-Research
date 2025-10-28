@@ -7,11 +7,21 @@ This directory contains the research notebooks\* by Hirofumi Mitani during the F
 ## Research Project
 abstract
 
-Orak cancer and upper gastrointestinal cancer are lifestyle-related, such as exercise, smoking, and drinking.
-However,the nutritional patterns and their relationships are still unclear.
-In Japan, there is a large-scale cohort sutdy called J-MICC Study.
-In this study, we will use this data to create a machine learning model for classification of oral and upper gastrointestinal cancers.
+### Objective
+The purpose of this study is to create a cancer classisication model using data form the J-MICC Study and investigate its association with oral and upper gastrointestinal cancers.
 
+### methods
+From the J-MICC Study, oral and upper gastrointestinal cancer patients and a control group(n=1,546 1:1)matched for propensity scores such as age and sex were selected as study subjects.
+We then constructed a machine learning model to classify cancer and non-cancer cases from the nutritional data of the control group and evaluated the importance of features in the model.
+
+### results
+The accuracy of the random forest model built using energy-adjusted nutrient data was 0.56,and the accurecy of the random forest model built using the adjusted nutrient data's principal component scores was 0.55.
+Furthermpore, Shapley Additive Explantations values showed relativaly high for carbohydrates, monounsaturated fatty acid, and calcium.
+
+### Discussion
+This random forest model had low discrimination accuracy, indicating that the nutrient intake data used in this study alone can not adequately predict the incidence of oral and upper gastrointestinal cancer.
+One possible interpretation of there results is that other risk factors outweighed the effects of the study.
+To assess the effects of nutrients, it is anticipated that future work will inovlve adjusted for cinfounding factors and incorporating them into the model.
 
 ## Notebooks
 - Preprocessing:

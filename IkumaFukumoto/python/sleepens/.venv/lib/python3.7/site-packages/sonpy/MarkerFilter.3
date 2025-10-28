@@ -1,0 +1,250 @@
+.TH "MarkerFilter" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MarkerFilter \- A class for filtering markers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <pfilter\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMarkerFilter\fP ()"
+.br
+.RI "Default constructor that makes a filter with a small \fBrepr\fP output\&. "
+.ti -1c
+.RI "bool \fBFilter\fP (const \fBDigMark\fP &\fBMarker\fP) const"
+.br
+.RI "See whether a Marker passes this filter\&. "
+.ti -1c
+.RI "void \fBSetMode\fP (\fBFilterMode\fP eMode)"
+.br
+.RI "Set the filter mode\&. "
+.ti -1c
+.RI "\fBFilterMode\fP \fBGetMode\fP () const"
+.br
+.RI "Query the current FilterMode\&. "
+.ti -1c
+.RI "int \fBSetItem\fP (int iLayer, int iItem, \fBFilterSet\fP eSet)"
+.br
+.RI "Tell the filter which marker codes to accept\&. "
+.ti -1c
+.RI "int \fBSetLayer\fP (int iLayer, std::array< \fBFilterSet\fP, 256 > eSet)"
+.br
+.RI "Sets all of the items in a layer\&. "
+.ti -1c
+.RI "bool \fBGetItem\fP (int iLayer, int iItem) const"
+.br
+.RI "Gets an item in a specified layer\&. "
+.ti -1c
+.RI "std::vector< bool > \fBGetLayer\fP (int iLayer) const"
+.br
+.RI "Gets either all of the items in a sepcified layer or the item in each active layer\&. "
+.ti -1c
+.RI "\fBFilterState\fP \fBGetState\fP (int iLayer) const"
+.br
+.RI "Check to see what items the filter will pass\&. "
+.ti -1c
+.RI "void \fBSetColumn\fP (int nCol)"
+.br
+.RI "Set the column to return when reading extended marker data\&. "
+.ti -1c
+.RI "int \fBGetColumn\fP () const"
+.br
+.RI "Get which column is used when returning data\&. "
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBMarkerFilter\fP &rhs) const"
+.br
+.RI "Test if two filters are the same\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A class for filtering markers\&. 
+
+Objects of this class are used to filter Marker-derived channels to determine if a particular data item is wanted or not\&. This class is also used to choose which trace AdcMark channels with multiple traces return when read as Adc data\&.
+.PP
+A new filter will pass all markers and traces by default\&.
+.PP
+A filter consists of several items, the accessible ones of which are: four bit mask layers, the filter mode and the trace column\&.
+.PP
+The mask consists of 4 layers, corresponding to the 4 possible marker codes\&. Each layer containing 256 items, corresponding to the possible values of each marker code\&. Each item can be 'Set' or 'Clear'\&. When the filter is applied to a marker, the Nth filter layer is searched to see if the Nth marker code is 'Set' in the layer\&. If it is, the filter has passed the marker\&.
+.PP
+There is also a filter mode, which can be 'First' or 'All' from the FilterMode enumeration\&. If set to 'First', only the first code must pass the first filter layer, whereas if set to 'All', all four codes much pass each respective layer\&.
+.PP
+Finally, there is the trace column\&. This is only relevant if you are reading WaveMark data as a waveform with ReadWave()\&. It is used to determine which column of data, or 'trace' is returned if there are multiple columns present\&. By default, it is unset (or rather, set to -1), which is the same as being set to zero\&.
+.PP
+There are three enumerations associated with this class, called FilterMode, FilterState and FilterSet\&. Each is explained by the relevant member functions\&. See \fBGetMode()\fP, \fBSetMode()\fP, \fBSetItem()\fP, GetItems() and \fBGetState()\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool MarkerFilter::Filter (const \fBDigMark\fP & Marker) const"
+
+.PP
+See whether a Marker passes this filter\&. In 'All' mode, each marker code must have the corresponding item set in the marker mask\&. In 'First' mode, only mask 0 is used\&. One of the 4 marker codes MUST be present in mask 0 with the exception that code 00 is only tested for the first marker code\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIMarker\fP A \fBDigMark\fP object to attemp to pass through the filter 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Whether the marker passes the filter 
+.RE
+.PP
+
+.SS "int MarkerFilter::GetColumn () const"
+
+.PP
+Get which column is used when returning data\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The column of data that will be returned (zero-indexed)\&. -1 Means you will get all traces\&. 
+.RE
+.PP
+
+.SS "bool MarkerFilter::GetItem (int iLayer, int iItem) const"
+
+.PP
+Gets an item in a specified layer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIiLayer\fP The index of the layer to look in 
+.br
+\fIiItem\fP The item in the layer to look at 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+True if the item is set, False if not 
+.RE
+.PP
+
+.SS "std::vector< bool > MarkerFilter::GetLayer (int iLayer) const"
+
+.PP
+Gets either all of the items in a sepcified layer or the item in each active layer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIiLayer\fP The index of the layer to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A list of the relevant items, or containing error codes\&. 
+.RE
+.PP
+
+.SS "\fBFilterMode\fP MarkerFilter::GetMode () const"
+
+.PP
+Query the current FilterMode\&. 
+.PP
+\fBReturns\fP
+.RS 4
+A member of FilterMode, 'All' or 'First' 
+.RE
+.PP
+
+.SS "\fBFilterState\fP MarkerFilter::GetState (int iLayer) const"
+
+.PP
+Check to see what items the filter will pass\&. This is easy if the State is explicitly set, but if it is unset an internal calculation is performed to see what effect the filter has at the current time\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIiLayer\fP The layer to test, ignoring FilterMode\&. If -1, tests all layers using FilterMode instead\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The effect of applying this filter as a FilterState\&. One of All, None or Some\&. 
+.RE
+.PP
+
+.SS "bool MarkerFilter::operator== (const \fBMarkerFilter\fP & rhs) const"
+
+.PP
+Test if two filters are the same\&. Checks the number of layers, filter mode and the masks, but not the filter state\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIrhs\fP The filter to compare the current against 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+If the two filters are equivalent 
+.RE
+.PP
+
+.SS "void MarkerFilter::SetColumn (int nCol)"
+
+.PP
+Set the column to return when reading extended marker data\&. For WaveMark channels, this means the number of the trace that is used\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fInCol\fP The column number to use (zero-indexed)\&. Setting a non-existent column will default to using 0\&. Use -1 to view all at once\&. 
+.RE
+.PP
+
+.SS "int MarkerFilter::SetItem (int iLayer, int iItem, \fBFilterSet\fP eSet)"
+
+.PP
+Tell the filter which marker codes to accept\&. Items in each mask layer are either Set or Clear\&. You can also invert the current state\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIiLayer\fP The layer number, 0 to 3, or -1 for all layers 
+.br
+\fIiItem\fP The item number in the layer, 0 to 256, or -1 for all items 
+.br
+\fIeSet\fP A member of FilterSet: 'Clear', 'Invert' or 'Set' 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An error code, zero for success 
+.RE
+.PP
+
+.SS "int MarkerFilter::SetLayer (int iLayer, std::array< \fBFilterSet\fP, 256 > eSet)"
+
+.PP
+Sets all of the items in a layer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIiLayer\fP The layer to set (0-3) 
+.br
+\fIeSet\fP An array of FilterSet objects exactly 256 items long 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An error code, zero for success 
+.RE
+.PP
+
+.SS "void MarkerFilter::SetMode (\fBFilterMode\fP eMode)"
+
+.PP
+Set the filter mode\&. Tell the filter whether markers need to pass all of the mask layers or only the first one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIeMode\fP A member of FilterMode, 'All' or 'First' 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

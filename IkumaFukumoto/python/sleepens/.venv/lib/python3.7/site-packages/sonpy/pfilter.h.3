@@ -1,0 +1,96 @@
+.TH "D:/hgwork/sonpy/pfilter.h" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+D:/hgwork/sonpy/pfilter.h \- Declares the \fBMarkerFilter\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'pmarker\&.h'\fP
+.br
+\fC#include 's64filt\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBMarkerFilter\fP"
+.br
+.RI "A class for filtering markers\&. "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBFilterMode\fP { \fBFilterMode::All\fP = ceds64::CSFilter::eMode::eM_and, \fBFilterMode::First\fP = ceds64::CSFilter::eMode::eM_or }"
+.br
+.RI "How a filter determines which layer to sort with\&. "
+.ti -1c
+.RI "enum \fBFilterSet\fP { \fBFilterSet::Clear\fP = ceds64::CSFilter::eSet::eS_clr, \fBFilterSet::Invert\fP = ceds64::CSFilter::eSet::eS_inv, \fBFilterSet::Set\fP = ceds64::CSFilter::eSet::eS_set }"
+.br
+.RI "Used to query or set the item states in filter layers\&. "
+.ti -1c
+.RI "enum \fBFilterState\fP { \fBFilterState::All\fP = ceds64::CSFilter::eActive::eA_all, \fBFilterState::None\fP = ceds64::CSFilter::eActive::eA_none, \fBFilterState::Some\fP = ceds64::CSFilter::eActive::eA_some, \fBFilterState::Unset\fP = ceds64::CSFilter::eActive::eA_unset }"
+.br
+.RI "Used internally to save some time on calculations, or to get a general description of what the filter does\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Declares the \fBMarkerFilter\fP class\&. 
+
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBFilterMode\fP\fC [strong]\fP"
+
+.PP
+How a filter determines which layer to sort with\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIAll \fP\fP
+Compare all four marker codes against their respective filter layer\&. 
+.TP
+\fB\fIFirst \fP\fP
+Only check the first filter layer for the first marker code\&. 
+.SS "enum \fBFilterSet\fP\fC [strong]\fP"
+
+.PP
+Used to query or set the item states in filter layers\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIClear \fP\fP
+Markers with this code will not pass the filter\&. 
+.TP
+\fB\fIInvert \fP\fP
+Only used with SetItem()\&. Inverts the current state, whichever it may be\&. 
+.TP
+\fB\fISet \fP\fP
+Markers with this code will pass the filter\&. 
+.SS "enum \fBFilterState\fP\fC [strong]\fP"
+
+.PP
+Used internally to save some time on calculations, or to get a general description of what the filter does\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIAll \fP\fP
+This filter will pass all markers\&. 
+.TP
+\fB\fINone \fP\fP
+this filter will pass no markers 
+.TP
+\fB\fISome \fP\fP
+this filter will pass only some markers 
+.TP
+\fB\fIUnset \fP\fP
+the state has not yet been determined (you should never see this, as if you call GetState() this attribute will be calculated) 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

@@ -1,0 +1,1752 @@
+.TH "SonFile" 3 "Fri Jul 9 2021" "Version 1.7.5" "SonPy" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SonFile \- Wraps either a 64- or 32-bit File and passes function calls to it in a tidy way\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <psonfile\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSonFile\fP (std::string &sName, bool bReadOnly, \fBOpenFlags\fP flags=\fBOpenFlags::None\fP)"
+.br
+.RI "Constructor for opening an existing file\&. "
+.ti -1c
+.RI "\fBSonFile\fP (std::string &sName, uint16_t nChans=32, uint32_t nArea=0)"
+.br
+.RI "Constructor for creating a new file\&. "
+.ti -1c
+.RI "int \fBGetOpenError\fP () const noexcept"
+.br
+.RI "Return any error code from an attempt to open or create a file\&. "
+.ti -1c
+.RI "bool \fBisFile64\fP () const noexcept"
+.br
+.RI "Is the file 64-bit? "
+.ti -1c
+.RI "bool \fBisFile32\fP () const noexcept"
+.br
+.RI "Is the file 32-bit? "
+.ti -1c
+.RI "std::string \fBGetName\fP () const noexcept"
+.br
+.RI "Retrieve the name of file corrently owned by this object\&. "
+.ti -1c
+.RI "bool \fBCanWrite\fP () const"
+.br
+.RI "Is the file read only?;\&. "
+.ti -1c
+.RI "int \fBEmptyFile\fP ()"
+.br
+.RI "Mark the file as empty, ready to start sampling again\&. "
+.ti -1c
+.RI "int \fBGetFreeChannel\fP () const"
+.br
+.RI "Get the number of the lowest channel that is Off\&. "
+.ti -1c
+.RI "int \fBCommit\fP (\fBCommitFlags\fP flags=\fBCommitFlags::None\fP)"
+.br
+.RI "Makes sure all data in memory is passed to the disk system\&. "
+.ti -1c
+.RI "bool \fBIsModified\fP () const"
+.br
+.RI "Is there unwritten data, header or channel data, in memory? "
+.ti -1c
+.RI "int \fBFlushSysBuffers\fP ()"
+.br
+.RI "Tell the disk system to move data in disk buffers to the disk\&. "
+.ti -1c
+.RI "double \fBGetTimeBase\fP () const"
+.br
+.RI "Retrieves the current file timebase\&. "
+.ti -1c
+.RI "void \fBSetTimeBase\fP (double dSecPerTick)"
+.br
+.RI "Set a new timebase\&. "
+.ti -1c
+.RI "template<typename T > py::array_t< T > \fBGetExtraData\fP (uint32_t nItems, uint32_t nOffset)"
+.br
+.RI "Retrieve data from the user defined area\&. "
+.ti -1c
+.RI "template<typename T > int \fBSetExtraData\fP (const std::vector< T > &aData, uint32_t nOffset)"
+.br
+.RI "Save the binary representation of an array in the user defined area\&. "
+.ti -1c
+.RI "uint32_t \fBGetExtraDataSize\fP () const"
+.br
+.RI "Retrieves the size of the user defined extra data region\&. "
+.ti -1c
+.RI "std::string \fBGetFileComment\fP (int n)"
+.br
+.RI "Retrieves a file comment\&. "
+.ti -1c
+.RI "int \fBSetFileComment\fP (int n, const std::string &sComment)"
+.br
+.RI "Sets a file comment\&. "
+.ti -1c
+.RI "int \fBMaxChannels\fP () const"
+.br
+.RI "How many channels can this file contain? "
+.ti -1c
+.RI "std::string \fBGetAppID\fP () const"
+.br
+.RI "Retrieves the AppID\&. "
+.ti -1c
+.RI "int \fBSetAppID\fP (const std::string &sData)"
+.br
+.RI "Sets the AppID\&. "
+.ti -1c
+.RI "std::vector< uint16_t > \fBGetTimeDate\fP ()"
+.br
+.RI "Gets the saved TimeDate\&. "
+.ti -1c
+.RI "int \fBSetTimeDate\fP (py::list lData)"
+.br
+.RI "Sets the time and date of the file\&. "
+.ti -1c
+.RI "int \fBGetVersion\fP () const"
+.br
+.RI "Get the file version\&. "
+.ti -1c
+.RI "uint64_t \fBFileSize\fP () const"
+.br
+.RI "Get the offset to the next block the file would allocate\&. "
+.ti -1c
+.RI "uint64_t \fBChannelBytes\fP (uint16_t chan) const"
+.br
+.RI "Get an estimate of how many bytes are stored for a channel\&. "
+.ti -1c
+.RI "int64_t \fBMaxTime\fP (bool bReadChans=true) const"
+.br
+.RI "Get the maximum time of any item in the file\&. "
+.ti -1c
+.RI "void \fBExtendMaxTime\fP (int64_t t)"
+.br
+.RI "Extend or cancel the max time in a file\&. "
+.ti -1c
+.RI "std::string \fBGetChannelComment\fP (uint16_t chan)"
+.br
+.RI "Retrieves the channel comment if present\&. "
+.ti -1c
+.RI "int \fBSetChannelComment\fP (uint16_t chan, std::string sComment)"
+.br
+.RI "Save a comment for an individual channel\&. "
+.ti -1c
+.RI "std::string \fBGetChannelTitle\fP (uint16_t chan)"
+.br
+.RI "Retrieves the channel title\&. "
+.ti -1c
+.RI "int \fBSetChannelTitle\fP (uint16_t chan, std::string sTitle)"
+.br
+.RI "Set a channel title\&. "
+.ti -1c
+.RI "std::string \fBGetChannelUnits\fP (uint16_t chan)"
+.br
+.RI "Retrieves the channel units\&. "
+.ti -1c
+.RI "int \fBSetChannelUnits\fP (uint16_t chan, std::string sUnits)"
+.br
+.RI "Set the channel units\&. "
+.ti -1c
+.RI "double \fBGetIdealRate\fP (uint16_t chan) const"
+.br
+.RI "Get the ideal rate of a channel\&. "
+.ti -1c
+.RI "int \fBSetIdealRate\fP (uint16_t chan, double dRate)"
+.br
+.RI "Set a new target channel rate\&. "
+.ti -1c
+.RI "double \fBGetChannelScale\fP (uint16_t chan) const"
+.br
+.RI "Retrieves the channel scale\&. "
+.ti -1c
+.RI "int \fBSetChannelScale\fP (uint16_t chan, double dScale)"
+.br
+.RI "Set the Y scale for a channel\&. "
+.ti -1c
+.RI "double \fBGetChannelOffset\fP (uint16_t chan) const"
+.br
+.RI "Retrieves the channel offset\&. "
+.ti -1c
+.RI "int \fBSetChannelOffset\fP (uint16_t chan, double dOffset)"
+.br
+.RI "Set the Y offset for a channel\&. "
+.ti -1c
+.RI "std::pair< double, double > \fBGetChannelYRange\fP (uint16_t chan)"
+.br
+.RI "Retrieve suggested channel limits on the Y axis\&. "
+.ti -1c
+.RI "int \fBSetChannelYRange\fP (uint16_t chan, double dLow, double dHigh)"
+.br
+.RI "Set the suggested Y range for a channel\&. "
+.ti -1c
+.RI "\fBDataType\fP \fBChannelType\fP (uint16_t chan) const"
+.br
+.RI "What kind of channel is this? "
+.ti -1c
+.RI "int \fBItemSize\fP (uint16_t chan) const"
+.br
+.RI "Get the size of the repeating item held by this channel, in bytes\&. "
+.ti -1c
+.RI "int64_t \fBChannelDivide\fP (uint16_t chan) const"
+.br
+.RI "Get the waveform sample interval in clock ticks\&. "
+.ti -1c
+.RI "int64_t \fBChannelMaxTime\fP (uint16_t chan) const"
+.br
+.RI "Get the time of the last item in the channel\&. "
+.ti -1c
+.RI "int64_t \fBPreviousNTime\fP (uint16_t chan, int64_t trStart, int64_t trEnd=0, uint32_t n=1, bool bAsWave=false, const \fBMarkerFilter\fP &Filter=DefFilter()) const"
+.br
+.RI "Search backwards to find the Nth point before a given time\&. "
+.ti -1c
+.RI "int \fBPhysicalChannel\fP (uint16_t chan) const"
+.br
+.RI "Get the physical channel number associated with a channel\&. "
+.ti -1c
+.RI "int \fBChannelDelete\fP (uint16_t chan)"
+.br
+.RI "Delete a channel from the file\&. "
+.ti -1c
+.RI "int \fBChannelUndelete\fP (uint16_t chan, bool bRestore=false)"
+.br
+.RI "Undelete a channel\&. "
+.ti -1c
+.RI "void \fBSave\fP (int chan, int64_t t, bool bSave)"
+.br
+.RI "Toggle the save state for a buffered channel\&. "
+.ti -1c
+.RI "void \fBSaveRange\fP (int chan, int64_t tFrom, int64_t tUpto)"
+.br
+.RI "Set a time range to be saved\&. "
+.ti -1c
+.RI "bool \fBIsSaving\fP (uint16_t chan, int64_t tAt) const"
+.br
+.RI "Report the save state at a certain time\&. "
+.ti -1c
+.RI "std::vector< int64_t > \fBNoSaveList\fP (uint16_t chan, size_t nMax, int64_t tFrom=\-1, int64_t tUpto=TSTIME64_MAX)"
+.br
+.RI "Get a list of times where saving is turned off and on\&. "
+.ti -1c
+.RI "double \fBSetBuffering\fP (int chan, size_t nBytes, double dSeconds=0\&.) const"
+.br
+.RI "Set the buffering used with one or all channels\&. "
+.ti -1c
+.RI "int \fBLatestTime\fP (int chan, int64_t t)"
+.br
+.RI "Tell circular buffering the latest time we have reached during data sampling\&. "
+.ti -1c
+.RI "int \fBSetEventChannel\fP (uint16_t chan, double dRate, \fBDataType\fP evtKind=\fBDataType::EventFall\fP, int iPhysChan=\-1)"
+.br
+.RI "Designate a channel to hold event data\&. "
+.ti -1c
+.RI "int \fBSetInitialLevel\fP (uint16_t chan, bool bLevel)"
+.br
+.RI "Set the initial level of a \fBDataType::EventBoth\fP channel\&. "
+.ti -1c
+.RI "int \fBWriteEvents\fP (uint16_t chan, std::vector< int64_t > aData)"
+.br
+.RI "Writes events to an event channel\&. "
+.ti -1c
+.RI "std::vector< int64_t > \fBReadEvents\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto=TSTIME64_MAX, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Reads events from the specified channel\&. "
+.ti -1c
+.RI "int \fBSetMarkerChannel\fP (uint16_t chan, double dRate, int iPhysChan=\-1)"
+.br
+.RI "Designate a channel to hold markers\&. "
+.ti -1c
+.RI "int \fBWriteMarkers\fP (uint16_t chan, const std::vector< \fBDigMark\fP > &aData)"
+.br
+.RI "Write a series of simple markers\&. "
+.ti -1c
+.RI "std::vector< \fBDigMark\fP > \fBReadMarkers\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Reads markers from marker or extended marker channels\&. "
+.ti -1c
+.RI "int \fBEditMarker\fP (uint16_t chan, \fBDigMark\fP &Mark)"
+.br
+.RI "For editing marker codes in any Marker based channel\&. "
+.ti -1c
+.RI "int \fBSetWaveMarkChannel\fP (uint16_t chan, double dRate, size_t nRows, size_t nCols, int iPhysChan=\-1, uint64_t tSubDvd=0, int nPre=0)"
+.br
+.RI "Designate a channel to hold WaveMark data\&. "
+.ti -1c
+.RI "int \fBWriteWaveMarks\fP (uint16_t chan, const std::vector< \fBWaveMarker\fP > &aData)"
+.br
+.RI "Write WaveMarks to the file\&. "
+.ti -1c
+.RI "std::vector< \fBWaveMarker\fP > \fBReadWaveMarks\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto=TSTIME64_MAX, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Read WaveMark data\&. "
+.ti -1c
+.RI "int \fBEditWaveMark\fP (uint16_t chan, \fBWaveMarker\fP &Mark)"
+.br
+.RI "Edit a WaveMark\&. "
+.ti -1c
+.RI "int \fBSetRealMarkChannel\fP (uint16_t chan, double dRate, size_t nRows, int iPhysChan=\-1)"
+.br
+.RI "Designate a channel to hold RealMark data\&. "
+.ti -1c
+.RI "int \fBWriteRealMarks\fP (uint16_t chan, const std::vector< \fBRealMarker\fP > &aData)"
+.br
+.RI "Write RealMarks to the file\&. "
+.ti -1c
+.RI "std::vector< \fBRealMarker\fP > \fBReadRealMarks\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto=TSTIME64_MAX, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Read RealMark data\&. "
+.ti -1c
+.RI "int \fBEditRealMark\fP (uint16_t chan, \fBRealMarker\fP &Mark)"
+.br
+.RI "Edit a RealMark\&. "
+.ti -1c
+.RI "int \fBSetTextMarkChannel\fP (uint16_t chan, double dRate, size_t nMax, int iPhysChan=\-1)"
+.br
+.RI "Designate a channel to hold TextMark data\&. "
+.ti -1c
+.RI "int \fBWriteTextMarks\fP (uint16_t chan, const std::vector< \fBTextMarker\fP > &aData)"
+.br
+.RI "Write TextMarks to the file\&. "
+.ti -1c
+.RI "std::vector< \fBTextMarker\fP > \fBReadTextMarks\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto=TSTIME64_MAX, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Read TextMark data\&. "
+.ti -1c
+.RI "int \fBEditTextMark\fP (uint16_t chan, \fBTextMarker\fP &Mark)"
+.br
+.RI "Edit a TextMark\&. "
+.ti -1c
+.RI "std::vector< size_t > \fBGetExMarkInfo\fP (uint16_t chan)"
+.br
+.RI "Get information on extended marker data\&. "
+.ti -1c
+.RI "int \fBSetWaveChannel\fP (uint16_t chan, int64_t tDivide, \fBDataType\fP eKind, double dRate=0\&., int iPhysChan=\-1)"
+.br
+.RI "Designate a channel to hold Wavemark or RealWave data\&. "
+.ti -1c
+.RI "int64_t \fBWriteInts\fP (uint16_t chan, std::vector< short > aData, int64_t tFrom)"
+.br
+.RI "Write int data to an Adc channel\&. "
+.ti -1c
+.RI "int64_t \fBWriteFloats\fP (uint16_t chan, std::vector< float > aData, int64_t tFrom)"
+.br
+.RI "Write float data to a RealWave channel\&. "
+.ti -1c
+.RI "template<typename T > py::array_t< T > \fBReadWave\fP (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP &Filter)"
+.br
+.RI "Reads a wave and returns it in an array of ints or floats\&. "
+.ti -1c
+.RI "int64_t \fBFirstTime\fP (uint16_t chan, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP &Filter=DefFilter())"
+.br
+.RI "Search forward to find the point after a given time\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Wraps either a 64- or 32-bit File and passes function calls to it in a tidy way\&. 
+
+This class is meant to obey RAII, in that when you create an instance of one you must either create or open a file, and when you delete one the resources are closed and saved\&. The only time this is not the case is when there is a construction error, and you will be left with an empty \fBSonFile\fP owning no resources, just an error code\&.
+.PP
+There are several cases where the underlying functions require pointers to be passed\&. To avoid this in Python, we either ask for lists/arrays and use the data in them, or return a newly created array or list\&. As the internal functions in C++ do not benefit from the useful Python feature of have list 'views', the more times we have to manipulate data to get it into a list the more copying is involved\&. Reading extended markers are particularly bad cases, as we return a list of two arrays\&.
+.PP
+In some cases, most notably \fBReadWave()\fP, we ask for an array by reference and append/edit it as neccessary\&. This has two advantages: firstly, we can return an error code (none of this code throws any custom exceptions) separately to the data we return, but more useful is that we can perform basic type checking on the array given, and proceeed accordingly (there are two copies of WriteWave() in the native library, one each for float and short data)\&.
+.PP
+The family of read functions are hierarchical, in that a function of 'lower' complexity can be successfully called on channels of 'higher' complexity\&. For instance, \fBReadEvents()\fP can be called on marker or extended marker channels, but \fBReadMarkers()\fP cannot be called on event channels\&.
+.PP
+There are two constructors, one for opening files which requires at least two explicit parameters and another for file creation, which only explicitely requires a file name\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "SonFile::SonFile (std::string & sName, bool bReadOnly, \fBOpenFlags\fP flags = \fC\fBOpenFlags::None\fP\fP)"
+
+.PP
+Constructor for opening an existing file\&. Whether we try and open the file as 32- or 64-bit depends on the file extension\&. '\&.smrx' gets opened as 64-bit, andyhting else is treated as 32-bit\&. If we succeed in opening the file, m_iOpenErr is set to S64_OK, else an appropriate error\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsName\fP The path of the existing file to open 
+.br
+\fIbReadOnly\fP If the file will be opened in read only mode 
+.br
+\fIflags\fP One of the OpenFlags enum 
+.RE
+.PP
+
+.SS "SonFile::SonFile (std::string & sName, uint16_t nChans = \fC32\fP, uint32_t nArea = \fC0\fP)"
+
+.PP
+Constructor for creating a new file\&. Creates a new SON file\&. If we succeed, m_iOpenErr is set to S64_OK, else an appropriate error\&.
+.PP
+In the case that the file is 64-bit, some preparation is handled automatically, such as initiallising buffering for channel writing, and setting a default timebase of 1 microsecond\&.
+.PP
+Using wExtra, you can set aside an area for entirely arbitary purposes\&. Currently, we make no use of this, so Spike2 will completely ignore any data in this section\&. This area is limited to 65536 bytes\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsName\fP The name of the new file\&. We use this to determine architecture\&. If the name ends with '\&.smr' we create a 32-bit file, else it is 64-bit\&. 
+.br
+\fInChans\fP The desired number of channels (minimum 32) 
+.br
+\fInArea\fP The desired extra space in the file header, in bytes\&. 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "uint64_t SonFile::ChannelBytes (uint16_t chan) const"
+
+.PP
+Get an estimate of how many bytes are stored for a channel\&. This is really only to say if there is any data stored or not for the channel and maybe to allow an estimate of the space/time needed for an operation on the channel\&. This will be reasonably accurate as long as all buffers written are full except the last\&. If you are sampling and have circular buffers, uncommitted data in the circular buffers is included\&.
+.PP
+To get an upper estimate of the number of data items held by the channel, divide the returned size by the channel \fBItemSize()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bytes on or commited to the disk for the channel 
+.RE
+.PP
+
+.SS "int SonFile::ChannelDelete (uint16_t chan)"
+
+.PP
+Delete a channel from the file\&. In a 64-bit file, channels are deleted in such a way that as long as you do not reuse the channel, it is possible to undelete them\&. To attempt this, see \fBChannelUndelete()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to delete 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int64_t SonFile::ChannelDivide (uint16_t chan) const"
+
+.PP
+Get the waveform sample interval in clock ticks\&. This is used by channels that sample equal interval waveforms and is the number of file clocks ticks per sample\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The sample interval in clock ticks, or 1 if the channel doesn't exist 
+.RE
+.PP
+
+.SS "int64_t SonFile::ChannelMaxTime (uint16_t chan) const"
+
+.PP
+Get the time of the last item in the channel\&. This works for both channels read from disk and channels that are being written\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The time of the last item in the channel, -1 if there is no data, or an error code\&. 
+.RE
+.PP
+
+.SS "\fBDataType\fP SonFile::ChannelType (uint16_t chan) const"
+
+.PP
+What kind of channel is this? 
+.PP
+\fBReturns\fP
+.RS 4
+The channel type, which can be Off\&. See the DataType enumeration\&. 
+.RE
+.PP
+
+.SS "int SonFile::ChannelUndelete (uint16_t chan, bool bRestore = \fCfalse\fP)"
+
+.PP
+Undelete a channel\&. To see if you can undelete a channel, call this first with bRestore as false (the default)\&. If the result is not ChanOff, you can attempt to undelete the channel by calling again with bRestore as true\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to undelete 
+.br
+\fIbRestore\fP If false, requests the type of the the deleted channel\&. If true, attempts to undelete it\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+If bRestore is false, the channel kind\&. Otherwise, an error code, zero for success\&. 
+.RE
+.PP
+
+.SS "int SonFile::Commit (\fBCommitFlags\fP flags = \fC\fBCommitFlags::None\fP\fP)"
+
+.PP
+Makes sure all data in memory is passed to the disk system\&. Write any parts of the file that need writing\&. Note that this just means that the data has made it as far as the operating system buffers\&. The default flags value of 0 will make sure that all dirty data (in the file header or channel data) is written to the operating system\&. The operating system will likely have its own disk buffers and it is entirely up to the operating system to decide when data is physically transferred to the disk\&. Even when data is sent to the disk, this does not guarantee permanent storage as disks have their own buffering systems which allow them to reorder writes into the most efficient (least head moving) order\&.
+.PP
+Be very careful and make sure you understand how the flags parameter works if you wish to depart from the default behaviour\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIflags\fP one of the CommitFlags items 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::EditMarker (uint16_t chan, \fBDigMark\fP & Marker)"
+
+.PP
+For editing marker codes in any Marker based channel\&. Does not currently allow editing the time, only the following codes\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to edit in 
+.br
+\fIMarker\fP A \fBDigMark\fP object, which replaces an existing marker in this channel\&. Marker must have the same tick value as the marker to be replaced\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::EditRealMark (uint16_t chan, \fBRealMarker\fP & Mark)"
+
+.PP
+Edit a RealMark\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIMark\fP A \fBRealMarker\fP which replaces an existing one in this channel\&. It must have the same tick value and length of data as the marker to be replaced\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::EditTextMark (uint16_t chan, \fBTextMarker\fP & Mark)"
+
+.PP
+Edit a TextMark\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIMark\fP A \fBTextMarker\fP which replaces an existing one in this channel\&. The length of the string must not exceed the maximum allowed for this channel\&. See \fBGetExMarkInfo()\fP\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::EditWaveMark (uint16_t chan, \fBWaveMarker\fP & Mark)"
+
+.PP
+Edit a WaveMark\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIMark\fP A \fBWaveMarker\fP which replaces an existing one in this channel\&. It must have the same tick value and length of data as the marker to be replaced\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::EmptyFile ()"
+
+.PP
+Mark the file as empty, ready to start sampling again\&. Sets the channel pointers back to time = 0, but doesn't change the settings or overwrite any data, so we can be quick\&.
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "void SonFile::ExtendMaxTime (int64_t t)"
+
+.PP
+Extend or cancel the max time in a file\&. \fBMaxTime()\fP can find the maximum time in the file by scanning all the channels\&. However, each time we write data we update the file head to hold the last written time\&. This can be used to make a file appear longer than it is, so we may wish to reset the last time\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIt\fP Set the MaxTime to this\&. -1 effectively removes MaxTime, and a value larger than MaxTime(false) extends it\&. 
+.RE
+.PP
+
+.SS "uint64_t SonFile::FileSize () const"
+
+.PP
+Get the offset to the next block the file would allocate\&. When a file is opened for reading, the physical file size should be the same or a small amount less than this\&. If it is more, the file has extra information written on the end and needs fixing\&. It was probably interrupted during writing\&. This does not included buffered data that is not committed to disk during writing\&.
+.PP
+\fBReturns\fP
+.RS 4
+The (estimated) file size in bytes, usually a multiple of 64 kB\&. 
+.RE
+.PP
+
+.SS "int64_t SonFile::FirstTime (uint16_t chan, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Search forward to find the point after a given time\&. WaveMark channels can be read provided there is suitable time axis information\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fItFrom\fP Time to start searching from 
+.br
+\fItUpto\fP Time to stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by if the channel is AdcMark 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The time of the first item in the specified time range or an error code\&. 
+.RE
+.PP
+
+.SS "int SonFile::FlushSysBuffers ()"
+
+.PP
+Tell the disk system to move data in disk buffers to the disk\&. Where supported, this tells the OS to make sure that data written to OS buffers ends up on disk\&. This can be very inefficient as it is allowed to remove all data from disk caches, resulting in very slow operation until data is reloaded\&.
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "std::string SonFile::GetAppID () const"
+
+.PP
+Retrieves the AppID\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The AppID, or a string corresponding to an error code 
+.RE
+.PP
+
+.SS "std::string SonFile::GetChannelComment (uint16_t chan)"
+
+.PP
+Retrieves the channel comment if present\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP Channel number 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The channel comment, or a string corresponding to an error code 
+.RE
+.PP
+
+.SS "double SonFile::GetChannelOffset (uint16_t chan) const"
+
+.PP
+Retrieves the channel offset\&. See \fBSetChannelScale()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "double SonFile::GetChannelScale (uint16_t chan) const"
+
+.PP
+Retrieves the channel scale\&. See \fBSetChannelScale()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "std::string SonFile::GetChannelTitle (uint16_t chan)"
+
+.PP
+Retrieves the channel title\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP Channel number 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The channel title, or a string corresponding to an error code 
+.RE
+.PP
+
+.SS "std::string SonFile::GetChannelUnits (uint16_t chan)"
+
+.PP
+Retrieves the channel units\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "std::pair< double, double > SonFile::GetChannelYRange (uint16_t chan)"
+
+.PP
+Retrieve suggested channel limits on the Y axis\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing the suggested low/high Y values, or an array containing an error code 
+.RE
+.PP
+
+.SS "std::vector< size_t > SonFile::GetExMarkInfo (uint16_t chan)"
+
+.PP
+Get information on extended marker data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing either [nRows, nCols, nPre] or an error code 
+.RE
+.PP
+
+.SS "template<typename T > py::array_t<T> SonFile::GetExtraData (uint32_t nItems, uint32_t nOffset)\fC [inline]\fP"
+
+.PP
+Retrieve data from the user defined area\&. This function calls a template which has 11 instances, with names like GetExtraDataChar, GetExtraDataSingle, GetExtraDataUInt16, GetExtraDataInt8 etc\&. The help() function in Python is not good at showing this, as it shows all int types as 'int' and all float types as 'float'\&.
+.PP
+You should only read data from this area as the type that you saved it as with \fBSetExtraData()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fInOffset\fP The offset to the point to read from, in bytes 
+.br
+\fInItems\fP The number of data items to read 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A 1D array containing either the data read or an error code 
+.RE
+.PP
+
+.SS "uint32_t SonFile::GetExtraDataSize () const"
+
+.PP
+Retrieves the size of the user defined extra data region\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The size of the user area in bytes 
+.RE
+.PP
+
+.SS "std::string SonFile::GetFileComment (int n)"
+
+.PP
+Retrieves a file comment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP The comment number, can be 0 to 7 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The string stored in comment n 
+.RE
+.PP
+
+.SS "int SonFile::GetFreeChannel () const"
+
+.PP
+Get the number of the lowest channel that is Off\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Index of next free channel (zero-indexed) 
+.RE
+.PP
+
+.SS "double SonFile::GetIdealRate (uint16_t chan) const"
+
+.PP
+Get the ideal rate of a channel\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The ideal channel rate, or 0 if the channel doesn't exist 
+.RE
+.PP
+
+.SS "double SonFile::GetTimeBase () const"
+
+.PP
+Retrieves the current file timebase\&. Everything in the file is quantified by the underlying clock tick (64-bit)\&. As all values in the file are stored, set and returned in ticks, you need to read this value to interpret times in seconds\&.
+.PP
+\fBReturns\fP
+.RS 4
+Timebase in seconds 
+.RE
+.PP
+
+.SS "std::vector< uint16_t > SonFile::GetTimeDate ()"
+
+.PP
+Gets the saved TimeDate\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The stored system time, or an array containing an error code\&. In Spike2, this is set to the time sampling started\&. 
+.RE
+.PP
+
+.SS "int SonFile::GetVersion () const"
+
+.PP
+Get the file version\&. 
+.PP
+\fBReturns\fP
+.RS 4
+The data file version or an error code 
+.RE
+.PP
+
+.SS "bool SonFile::IsModified () const"
+
+.PP
+Is there unwritten data, header or channel data, in memory? If an open data file is modified, it can have unwritten data in the file head and also in the data channels\&. Unwritten data can be written to the file using \fBCommit()\fP\&.
+.PP
+\fBReturns\fP
+.RS 4
+True if unwritten data present else false 
+.RE
+.PP
+
+.SS "bool SonFile::IsSaving (uint16_t chan, int64_t tAt) const"
+
+.PP
+Report the save state at a certain time\&. See \fBSave()\fP\&.
+.PP
+We can only say false if the data is in the circular buffer and is marked for non-saving\&. Once data is too old to be in the circular buffer we assume it is saved as if it was not, it will fail to be read from disk\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.br
+\fItAt\fP The time to check the save state at 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+True if the state is 'save' or the channel is non-buffered\&. False if it is 'don't save' or there is an error 
+.RE
+.PP
+
+.SS "int SonFile::ItemSize (uint16_t chan) const"
+
+.PP
+Get the size of the repeating item held by this channel, in bytes\&. Each channel holds repeating objects, all the same size\&. Note that all extended marker types have sizes that are rounded up to a multiple of 8 bytes\&. This routine is a convenient way to get the object sizes (though you could calculate them)\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::LatestTime (int chan, int64_t t)"
+
+.PP
+Tell circular buffering the latest time we have reached during data sampling\&. With circular buffering in use on a channel, if no data appears for a long time and no \fBCommit()\fP commands are issued, the commands to save and not save data ranges acumulate\&. By telling a channel the latest time for which no new data can be expected, the channel can clean up the save/no save list by deleting/amalgamating ranges that have no data in them\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIt\fP The time we have reached 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::MaxChannels () const"
+
+.PP
+How many channels can this file contain? 
+.PP
+\fBReturns\fP
+.RS 4
+The number of channels the file can have 
+.RE
+.PP
+
+.SS "int64_t SonFile::MaxTime (bool bReadChans = \fCtrue\fP) const"
+
+.PP
+Get the maximum time of any item in the file\&. The maximum time written to disk is saved in the file head\&. If this is not set, the maximum time is found by scanning all the channels for the maximum time saved in any channel\&. We can also force all channels to be scanned with the bReadChans argument\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIbReadChans\fP If this is true, if any channel has a later time than the file head, the channel time is used instead\&. If false, and the file head holds a time, this is used\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The maximum time in the file, in ticks\&. If file is empty, this may be -1 
+.RE
+.PP
+
+.SS "std::vector< int64_t > SonFile::NoSaveList (uint16_t chan, size_t nMax, int64_t tFrom = \fC\-1\fP, int64_t tUpto = \fCTSTIME64_MAX\fP)"
+
+.PP
+Get a list of times where saving is turned off and on\&. See \fBSave()\fP
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.br
+\fInMax\fP The max numbre of changes to return\&. 0 for all 
+.br
+\fItFrom\fP Start time to search from 
+.br
+\fItUpto\fP End time to search to 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array of times when the save state is saved\&. The save state is always assumed to start as save, so the first point is always a turning off of the save state\&. 
+.RE
+.PP
+
+.SS "int SonFile::PhysicalChannel (uint16_t chan) const"
+
+.PP
+Get the physical channel number associated with a channel\&. The pyhsical channel number is purely cosmetic and is not used for anything\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The number specified when the channel was created, -1 if unset 
+.RE
+.PP
+
+.SS "int64_t SonFile::PreviousNTime (uint16_t chan, int64_t trStart, int64_t trEnd = \fC0\fP, uint32_t n = \fC1\fP, bool bAsWave = \fCfalse\fP, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP) const"
+
+.PP
+Search backwards to find the Nth point before a given time\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.br
+\fItrStart\fP Reverse start, i\&.e\&. the time to search backwards from 
+.br
+\fItrEnd\fP Reverse end, i\&.e\&. the time to search backwards until 
+.br
+\fIn\fP How many points to step back by 
+.br
+\fIbAsWave\fP Use true with extended marker channels to treat marker data as a wave 
+.br
+\fIFilter\fP A \fBMarkerFilter\fP to filter Marker channels 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "std::vector< int64_t > SonFile::ReadEvents (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto = \fCTSTIME64_MAX\fP, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Reads events from the specified channel\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fInMax\fP The maximum number of events to return 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time so stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array conatining either the times of the events found or an error code 
+.RE
+.PP
+
+.SS "std::vector< \fBDigMark\fP > SonFile::ReadMarkers (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Reads markers from marker or extended marker channels\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to read from 
+.br
+\fInMax\fP The max number of markers to read 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time so stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+A list containing either DigitalMarkers or an error code 
+.RE
+.PP
+
+.SS "std::vector< \fBRealMarker\fP > SonFile::ReadRealMarks (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto = \fCTSTIME64_MAX\fP, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Read RealMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fInMax\fP The max number of marks to read 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time to stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing either the WaveMarkers read, or a single \fBRealMarker\fP where the tick value is an error code 
+.RE
+.PP
+
+.SS "std::vector< \fBTextMarker\fP > SonFile::ReadTextMarks (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto = \fCTSTIME64_MAX\fP, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Read TextMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fInMax\fP The max number of marks to read 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time to stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing either the WaveMarkers read, or a single \fBTextMarker\fP where the string describes an error 
+.RE
+.PP
+
+.SS "template<typename T > py::array_t<T> SonFile::ReadWave (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto, const \fBMarkerFilter\fP & Filter)\fC [inline]\fP"
+
+.PP
+Reads a wave and returns it in an array of ints or floats\&. This template function can be called either with ReadInts or ReadFloats, to use the channel scale and offset to transform the data into the return type that you want (usually, this will be float)\&.
+.PP
+WaveMark channels can be read provided there is suitable time axis information\&.
+.PP
+If you have been writing data sensibly, you will know the time of each of these data points, as they will be equally spaced at known multiples of the channel divider\&. If this is not the case, you can try to use \fBFirstTime()\fP to estimate the time of a single sata point\&.
+.PP
+If there are gaps in the Spike2 file, this will not be read as zero or NaN etc\&., it will simply be passed over, and you will end up with fewer points than the channel divide would otherwise imply\&. In this case, you must be extremely careful with how you treat your data\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number to read from 
+.br
+\fInMax\fP The max number of points to read\&. Must not be zero\&. 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time so stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by if the channel is AdcMark 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing the points read, or an error code 
+.RE
+.PP
+
+.SS "std::vector< \fBWaveMarker\fP > SonFile::ReadWaveMarks (uint16_t chan, int nMax, int64_t tFrom, int64_t tUpto = \fCTSTIME64_MAX\fP, const \fBMarkerFilter\fP & Filter = \fCDefFilter()\fP)"
+
+.PP
+Read WaveMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fInMax\fP The max number of marks to read 
+.br
+\fItFrom\fP The time to start searching from 
+.br
+\fItUpto\fP The time to stop searching at 
+.br
+\fIFilter\fP An optional \fBMarkerFilter\fP to filter the results by 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+An array containing either the WaveMarkers read, or a single \fBWaveMarker\fP where the tick value is an error code 
+.RE
+.PP
+
+.SS "void SonFile::Save (int chan, int64_t t, bool bSave)"
+
+.PP
+Toggle the save state for a buffered channel\&. The library saves a list of times at which save state changes will occur\&. See SaveList()\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIt\fP The time from which the state set should take effect\&. Can be before or after the current channel max time\&. 
+.br
+\fIbSave\fP True means save, false means don't save 
+.RE
+.PP
+
+.SS "void SonFile::SaveRange (int chan, int64_t tFrom, int64_t tUpto)"
+
+.PP
+Set a time range to be saved\&. See \fBSave()\fP\&.
+.PP
+This is expected to be used with a channel that is normally not being saved\&. It marks a time range for saving by adding a Save and don't save indication to the list of save state changes\&. You cannot change the state before the time of the last data sent to the write buffer\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fItFrom\fP Start of time range 
+.br
+\fItUpto\fP End of time range 
+.RE
+.PP
+
+.SS "int SonFile::SetAppID (const std::string & sData)"
+
+.PP
+Sets the AppID\&. The AppID is optional, and is purely descriptive\&. It consists of an 8 character string\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIsData\fP String containing the AppID to set\&. Any characters after the first 8 are ignored 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "double SonFile::SetBuffering (int chan, size_t nBytes, double dSeconds = \fC0\&.\fP) const"
+
+.PP
+Set the buffering used with one or all channels\&. Can be used for all existing channels, when it allocates buffering space and saves the buffering time, or for a single channel at a time\&.
+.PP
+If you do not call this function, no circular buffering is applied so \fBSave()\fP and \fBSaveRange()\fP will have no useful effect\&. In 64-bit files, you should find that this is called with some default parameters on file creation, so for simple cases you can start sampling without worrying about this\&.
+.PP
+For chan = -1: If dSeconds > 0, this is the desired buffering time\&. If nBytes is non-zero, it is a limit on the space to allow for all channels and will reduce dSeconds to fit with it\&. If nBytes = 0 and dSeconds > 0, the number of bytes is calculated and not limited\&. If nBytes = 0 and dSeconds <= 0, all buffering is cancelled on all channels\&. In all cases, the used dSeconds value is saved\&.
+.PP
+For chan > -1: If dSeconds < 0, it is replaced by any saved dSeconds\&. Then, if dSeconds > 0 this sets the buffering, limited by nBytes if nBytes > 0\&. If dSeconds = 0, the buffering is set by nBytes or removed if nBytes is 0\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set for, or -1 for all channels 
+.br
+\fInBytes\fP Max buffer size if non-zero 
+.br
+\fIdSeconds\fP Desired buffering time 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The buffering time set, or zero for read only files 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelComment (uint16_t chan, std::string sComment)"
+
+.PP
+Save a comment for an individual channel\&. Each channel can contain a single comment\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to save the comment under 
+.br
+\fIsComment\fP The comment to save 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelOffset (uint16_t chan, double dOffset)"
+
+.PP
+Set the Y offset for a channel\&. See \fBSetChannelScale()\fP\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number to set the offset of 
+.br
+\fIdOffset\fP The new offset 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelScale (uint16_t chan, double dScale)"
+
+.PP
+Set the Y scale for a channel\&. The channel scale and offset are used to translate between integer representations of values and real units\&. They are used for Adc, RealWave and AdcMark channels\&. When a channel is expressed in user units:
+.PP
+user units = integer * scale / 6553\&.6 + offset
+.PP
+For a RealWave channel, where the channel is already in user units, the scale and offset values tell us how to convert the channel back into integers:
+.PP
+integer = (user units - offset)*6553\&.6/scale
+.PP
+The factor of 6553\&.6 comes about because a scale value of 1\&.0 converts between an input range of 10 Volts and an ADC range of 65536\&. In most cases, you should not need to worry about this, just remember to use the equations\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number to set the scale of 
+.br
+\fIdScale\fP The new scale 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelTitle (uint16_t chan, std::string sComment)"
+
+.PP
+Set a channel title\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to title 
+.br
+\fIsComment\fP The title 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelUnits (uint16_t chan, std::string sUnits)"
+
+.PP
+Set the channel units\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set units for 
+.br
+\fIsUnits\fP The units to set 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetChannelYRange (uint16_t chan, double dLow, double dHigh)"
+
+.PP
+Set the suggested Y range for a channel\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to query 
+.br
+\fIdLow\fP The suggested low limit for Y 
+.br
+\fIdHigh\fP The suggested high limit for Y 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetEventChannel (uint16_t chan, double dRate, \fBDataType\fP evtKind = \fC\fBDataType::EventFall\fP\fP, int iPhysChan = \fC\-1\fP)"
+
+.PP
+Designate a channel to hold event data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set 
+.br
+\fIdRate\fP The expected max event rate that may be sustained over several seconds 
+.br
+\fIevtKind\fP Channel type, one of \fBDataType::EventFall\fP, \fBDataType::EventRise\fP or \fBDataType::EventBoth\fP 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "template<typename T > int SonFile::SetExtraData (const std::vector< T > & aData, uint32_t nOffset)\fC [inline]\fP"
+
+.PP
+Save the binary representation of an array in the user defined area\&. This function is a template, so the type that the saved data is interpreted as will be determined by the dtype of the array you pass in\&. Only 11 types are allowed, each of them plain old data types\&. These are char, single, double, and eight int types corresponding to 1, 2, 4 or 8 bytes, and signed or unsigned\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIaData\fP A 1D array of data to write 
+.br
+\fInOffset\fP How far from the start of the user defined area to start writing from, in bytes 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetFileComment (int n, const std::string & sComment)"
+
+.PP
+Sets a file comment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP The comment number, 0 to 7 
+.br
+\fIsComment\fP The comment to set 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code 
+.RE
+.PP
+
+.SS "int SonFile::SetIdealRate (uint16_t chan, double dRate)"
+
+.PP
+Set a new target channel rate\&. The ideal sample rate of a channel is an exact, set value\&. The actual rate (from \fBChannelDivide()\fP ) may differ, depending on the combination of desired sample rates in other channels, and the hardware available\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP Channel number to set rate for 
+.br
+\fIdRate\fP The new rate to set, in Hertz 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetInitialLevel (uint16_t chan, bool bLevel)"
+
+.PP
+Set the initial level of a \fBDataType::EventBoth\fP channel\&. All events in an EventBoth channel are assumed to be alternating, but we need to known what the first one is\&. In 64-bit files, the default is rising, whereas in 32-bit files it is falling\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIbLevel\fP True to set the initial event as falling, False for rising 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetMarkerChannel (uint16_t chan, double dRate, int iPhysChan = \fC\-1\fP)"
+
+.PP
+Designate a channel to hold markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set 
+.br
+\fIdRate\fP The expected max event rate that may be sustained over several seconds 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetRealMarkChannel (uint16_t chan, double dRate, size_t nRows, int iPhysChan = \fC\-1\fP)"
+
+.PP
+Designate a channel to hold RealMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set 
+.br
+\fIdRate\fP The expected max event rate that may be sustained over several seconds 
+.br
+\fInRows\fP The number of rows of attached items 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetTextMarkChannel (uint16_t chan, double dRate, size_t nMax, int iPhysChan = \fC\-1\fP)"
+
+.PP
+Designate a channel to hold TextMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set 
+.br
+\fIdRate\fP The expected max event rate that may be sustained over several seconds 
+.br
+\fInMax\fP The maximum number of characters that can be attached 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "void SonFile::SetTimeBase (double dSecPerTick)"
+
+.PP
+Set a new timebase\&. If you change this value the file header is marked as modified and the next \fBCommit()\fP will save it to the file\&. As all times are saved in terms of ticks of this period, nothing else in the file changes, but the entire time base of the file is scaled\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIdSecPerTick\fP New timebase in seconds 
+.RE
+.PP
+
+.SS "int SonFile::SetTimeDate (py::list lData)"
+
+.PP
+Sets the time and date of the file\&. We do not check the dtype so you must check it yourself\&. All values are stored as 8 bit unisgned ints, except the year, which is stored as a 16-bit unsigned int\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIlData\fP A list of exactly 7 values which must be interpretable as integers 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetWaveChannel (uint16_t chan, int64_t tDivide, \fBDataType\fP eKind, double dRate = \fC0\&.\fP, int iPhysChan = \fC\-1\fP)"
+
+.PP
+Designate a channel to hold Wavemark or RealWave data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fItDivide\fP The spacing (divide) for the channel in timebase units; must be greater than zero 
+.br
+\fIeKind\fP Channel kind, either Adc or RealWave 
+.br
+\fIdRate\fP The desired sampling rate in Hz\&. The rate you end up with may be slightly different (see IdealRate())\&. If <= 0, calculated as 1/(tDivide * \fBGetTimeBase()\fP) 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::SetWaveMarkChannel (uint16_t chan, double dRate, size_t nRows, size_t nCols, int iPhysChan = \fC\-1\fP, uint64_t tSubDvd = \fC0\fP, int nPre = \fC0\fP)"
+
+.PP
+Designate a channel to hold WaveMark data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to set 
+.br
+\fIdRate\fP The expected max event rate that may be sustained over several seconds 
+.br
+\fInRows\fP The number of rows of attached items 
+.br
+\fInCols\fP The number of columns of attached items 
+.br
+\fIiPhysChan\fP Physical channel number associated with the channel, purely cosmetic 
+.br
+\fItSubDvd\fP If > 0, this implies the attached data has a time axis, and this is used as the channel divider in units of timebase, as with wave channels\&. To retrieve this after setting, using \fBChannelDivide()\fP\&. 
+.br
+\fInPre\fP If tSubDvd <= 0, this is ignored\&. Otherwise, it sets the index into the rows of data at which the alignment point was located\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::WriteEvents (uint16_t chan, std::vector< int64_t > aData)"
+
+.PP
+Writes events to an event channel\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number to write to 
+.br
+\fIaData\fP A 1D array of monotonically increasing values to use as times\&. The dtype MUST be 64-bit signed ints, e\&.g\&. np\&.int64 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int64_t SonFile::WriteFloats (uint16_t chan, std::vector< float > aData, int64_t tFrom)"
+
+.PP
+Write float data to a RealWave channel\&. Unlike event-based channel types where all data must be written after any data already present, Waveform and RealWave data can be overwritten\&. This is to remain compatible with the 32-bit SON library but it could be argued that it should not be allowed\&. You cannot fill in gaps in the orignal data in this manner\&. It is imagined that you would use this to fix glitches or remove transients\&.
+.PP
+In normal use, all Waveform/RealWave data will be aligned at times that are at integer multiples of the channel divider\&. We do not prevent you writing data at other times, but programs like Spike2 may experience subtle problems if you do\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIaData\fP A 1D array of 2 byte ints 
+.br
+\fItFrom\fP The time (in file ticks) of the first point to write 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The next time to write or an error code 
+.RE
+.PP
+
+.SS "int64_t SonFile::WriteInts (uint16_t chan, std::vector< short > aData, int64_t tFrom)"
+
+.PP
+Write int data to an Adc channel\&. Unlike event-based channel types where all data must be written after any data already present, Waveform and RealWave data can be overwritten\&. This is to remain compatible with the 32-bit SON library but it could be argued that it should not be allowed\&. You cannot fill in gaps in the orignal data in this manner\&. It is imagined that you would use this to fix glitches or remove transients\&.
+.PP
+In normal use, all Waveform/RealWave data will be aligned at times that are at integer multiples of the channel divider\&. We do not prevent you writing data at other times, but programs like Spike2 may experience subtle problems if you do\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIaData\fP A 1D array of 4 byte floats 
+.br
+\fItFrom\fP The time (in file ticks) of the first point to write 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+The next time to write or an error code 
+.RE
+.PP
+
+.SS "int SonFile::WriteMarkers (uint16_t chan, const std::vector< \fBDigMark\fP > & aData)"
+
+.PP
+Write a series of simple markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel to write to 
+.br
+\fIaData\fP A 1D array of DigMarks 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::WriteRealMarks (uint16_t chan, const std::vector< \fBRealMarker\fP > & aData)"
+
+.PP
+Write RealMarks to the file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIaData\fP An array of RealMarkers\&. The data must be nRows long, where nRows can be found with \fBGetExMarkInfo()\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::WriteTextMarks (uint16_t chan, const std::vector< \fBTextMarker\fP > & aData)"
+
+.PP
+Write TextMarks to the file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIaData\fP An array of TextMarkers\&. The maximum length of any of the strings must not exceed nRows, which can be found with \fBGetExMarkInfo()\fP\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+.SS "int SonFile::WriteWaveMarks (uint16_t chan, const std::vector< \fBWaveMarker\fP > & aData)"
+
+.PP
+Write WaveMarks to the file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIchan\fP The channel number 
+.br
+\fIaData\fP An array of WaveMarkers\&. The data must have dimensions of nRows x nCols\&. You can find these with \fBGetExMarkInfo()\fP\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Error code, zero for success 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for SonPy from the source code\&.

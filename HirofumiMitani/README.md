@@ -24,10 +24,31 @@ One possible interpretation of there results is that other risk factors outweigh
 To assess the effects of nutrients, it is anticipated that future work will inovlve adjusted for cinfounding factors and incorporating them into the model.
 
 ## Notebooks
-- Preprocessing:
-- Analysis:
-- Visualization:
-
+- code_1
+・Extraction of necessary data
+・Converting missing values
+・Unifying data types
+・Creating new data columns(BMI, physical activity)
+・Removing excess energy data
+・Extraction of Follow-Up Data
+・Deletion of Data with Early Onset and History of Disease
+・Extraction of cancer patients
+- code_2
+・Distortion Removal
+・Energy Adjustment
+- code_3
+・Propensity score matching (PSM)
+・T-test, K-S test, Fisher test, Wilcoxon test
+- code_4
+・Standardization
+・Principal Component Analysis (PCA)
+- code_5
+・Creating training and testing data sets (80:20)
+・Optimizing hyperparameters for random forests
+・Accuracy
+・Confusion matrix
+・ROC curve
+・SHAP
 ## Requirement, Licence, Acknowledgement, etc.
 1.Douglas E Morse et al. Cancer Causes Control (2007)
 2. Mizuki Ohash et al. Hypertens Res(2022)

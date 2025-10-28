@@ -16,7 +16,7 @@ When researching the relationship between sleep and motor function, analysing th
 
 ### Results
 
-Only the key results are shown. This image has been mosaic-processed as it is unpublished.
+Only the key results are shown. Since these figures are not yet published, they have been intentionally pixelated for confidentiality.
 
 ![alt text](./images/fig2_mosaic.png)
 

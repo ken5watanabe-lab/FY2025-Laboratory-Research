@@ -76,19 +76,13 @@ To assess the effects of nutrients, it is anticipated that future work will inov
 
 ## Requirement, Licence, Acknowledgement, etc.
 
-1.Douglas E Morse et al. Cancer Causes Control (2007)
-
+1. Douglas E Morse et al. Cancer Causes Control (2007)
 2. Mizuki Ohash et al. Hypertens Res(2022)
-
-3.Jun Wu et al. Front Pharmacol(2024)
-
-4.Yukiko Yano et al. Cancer Prev Res (Phila)(2021)
-
+3. Jun Wu et al. Front Pharmacol(2024)
+4. Yukiko Yano et al. Cancer Prev Res (Phila)(2021)
 5. Wenmin Liu et al.Nutrients (2023)
-
-6.Ho D E et al. J Stat Softw (2021)
-
-7.Lundberg S M & Lee S-I et al. NeurIPS Proceedings (2017)
+6. Ho D E et al. J Stat Softw (2021)
+7. Lundberg S M & Lee S-I et al. NeurIPS Proceedings (2017)
 
 
 ## Log

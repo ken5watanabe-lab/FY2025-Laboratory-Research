@@ -18,11 +18,11 @@ When researching the relationship between sleep and motor function, analysing th
 
 Only the key results are shown.
 
-![alt text](./images/fig2.png)
+![alt text](./images/fig2_mosaic.png)
 
-![alt text](./images/fig3.png)
+![alt text](./images/fig3_mosaic.png)
 
-![alt text](./images/fig4.png)
+![alt text](./images/fig4_mosaic.png)
 
 
 ## Code Availability

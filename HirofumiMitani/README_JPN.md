@@ -5,19 +5,77 @@
 （\*公開可能なノート限定）  
 
 ## 研究テーマ
-要旨
 
-***(注：READMEの構造レベルで，好みに合わせて自由に編集してください！)***  
+### 目的
+本研究の目的は、J-MICCStudyのデータを用いて癌分類モデルを作成し、口腔がんおよび上部消化管がんとの関連性を調査することである。
+
+### 方法
+J-MICCStudyから、年齢や性別などの傾向スコアをマッチングさせた口腔がんおよび上部消化管がん患者と対照群（n=1,546 1:1）を研究対象として選定した。対照群の栄養データからがん症例と非癌症例を分類する機械学習モデルを構築し、モデルにおける特徴量の重要度を評価した。
+
+### 結果
+エネルギー調整済み栄養素データを用いて構築したランダムフォレストモデルの精度は0.56であり、調整済み栄養素データの主成分スコアを用いて構築したランダムフォレストモデルの精度は0.55であった。さらに、Shapley Additive Explantations値は、炭水化物、一価不飽和脂肪酸、およびカルシウムについて相対的に高い値を示した。
+
+## 考察
+このランダムフォレストモデルの識別精度は低く、本研究で使用した栄養摂取量データだけでは口腔がんおよび上部消化管がんの発生率を適切に予測することは難しいことを示しうる。この結果の解釈の一つとして、他のリスク要因が本研究の効果を上回ったことが挙げられる。栄養素の効果を評価するために、今後の研究では、他の交絡因子を調整し、モデルに組み込むことが必要だと考えられる。
 
 ## Jupyter Notebooks
-- 前処理：
-- 解析：
-- 可視化：
+### code_1
+・必要データの抽出
 
+・欠損値への変換
+
+・データ型の統一
+
+・新たなデータ列の作成(BMI、身体活動量)
+
+・エネルギー過多データの削除
+
+・追跡対象者データ抽出
+
+・早期発症および既往歴のあるデータの削除
+
+### code_2
+
+・ゆがみ処理
+
+・エネルギー調整
+
+### code_3
+
+・傾向スコア・マッチング(PSM)
+
+・T検定、K-S検定、Fisher検定、Wilcoxon検定
+
+### code_4
+
+標準化
+
+主成分分析(PCA)
+
+### code_5
+
+・学習用データとテスト用データ作成(80:20)
+
+・RFのハイパーパラメーターの最適化
+
+・accuracy
+
+・混同行列
+
+・ROC曲線
+
+・SHAP
 ## Requirement, Licence, Acknowledgement, etc.
-... 
+
+1. Douglas E Morse et al. Cancer Causes Control (2007)
+2. Mizuki Ohash et al. Hypertens Res(2022)
+3. Jun Wu et al. Front Pharmacol(2024)
+4. Yukiko Yano et al. Cancer Prev Res (Phila)(2021)
+5. Wenmin Liu et al.Nutrients (2023)
+6. Ho D E et al. J Stat Softw (2021)
+7. Lundberg S M & Lee S-I et al. NeurIPS Proceedings (2017)
 
 
 ## 編集ログ
 - Created this directory: Oct. 24, 2025 (Kengo Watanabe)
-- Uploaded the notebooks:
+- Uploaded the notebooks: Oct. 28, 2025 (Hirofumi Mitan)

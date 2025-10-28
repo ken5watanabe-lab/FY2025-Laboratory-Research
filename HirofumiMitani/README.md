@@ -7,7 +7,11 @@ This directory contains the research notebooks\* by Hirofumi Mitani during the F
 ## Research Project
 abstract
 
-***(Note: freely edit the README structure itself based on your preference!)***  
+Orak cancer and upper gastrointestinal cancer are lifestyle-related, such as exercise, smoking, and drinking.
+However,the nutritional patterns and their relationships are still unclear.
+In Japan, there is a large-scale cohort sutdy called J-MICC Study.
+In this study, we will use this data to create a machine learning model for classification of oral and upper gastrointestinal cancers.
+
 
 ## Notebooks
 - Preprocessing:

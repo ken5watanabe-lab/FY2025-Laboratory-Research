@@ -23,7 +23,7 @@ One possible interpretation of there results is that other risk factors outweigh
 To assess the effects of nutrients, it is anticipated that future work will inovlve adjusted for cinfounding factors and incorporating them into the model.
 
 ## Notebooks
-### -code_1
+### code_1
 
 ・Extraction of necessary data
 
@@ -41,25 +41,25 @@ To assess the effects of nutrients, it is anticipated that future work will inov
 
 ・Extraction of cancer patients
 
-### -code_2
+### code_2
 
 ・Distortion Removal
 
 ・Energy Adjustment
 
-### -code_3
+### code_3
 
 ・Propensity score matching (PSM)
 
 ・T-test, K-S test, Fisher test, Wilcoxon test
 
-### -code_4
+### code_4
 
 ・Standardization
 
 ・Principal Component Analysis (PCA)
 
-### -code_5
+### code_5
 
 ・Creating training and testing data sets (80:20)
 

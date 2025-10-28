@@ -5,7 +5,6 @@ This directory contains the research notebooks\* by Hirofumi Mitani during the F
 (\*Limited to the publicly shareable ones)  
 
 ## Research Project
-abstract
 
 ### Objective
 The purpose of this study is to create a cancer classisication model using data form the J-MICC Study and investigate its association with oral and upper gastrointestinal cancers.

@@ -26,14 +26,22 @@ To assess the effects of nutrients, it is anticipated that future work will inov
 ## Notebooks
 - code_1
 
-/Extraction of necessary data
---Converting missing values
+・Extraction of necessary data
+
+・Converting missing values
+
 ・Unifying data types
+
 ・Creating new data columns(BMI, physical activity)
+
 ・Removing excess energy data
+
 ・Extraction of Follow-Up Data
+
 ・Deletion of Data with Early Onset and History of Disease
+
 ・Extraction of cancer patients
+
 - code_2
 ・Distortion Removal
 ・Energy Adjustment

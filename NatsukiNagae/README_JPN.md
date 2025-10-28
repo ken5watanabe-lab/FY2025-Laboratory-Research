@@ -32,4 +32,4 @@ SNPデータから遺伝子発現の大規模予測においてAlphaGenomeの有
 
 ## 編集ログ
 - Created this directory: Oct. 24, 2025 (Kengo Watanabe)
-- Uploaded the notebooks:
+- Uploaded the notebooks: Oct. 28, 2025 (Natsuki Nagae)
